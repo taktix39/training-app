@@ -21,59 +21,42 @@
   --radius:14px;--radius-sm:9px;--radius-xs:7px;
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;}
-.app{max-width:430px;margin:0 auto;padding:0 0 env(safe-area-inset-bottom, 24px);}
-
-.topbar{padding:calc(env(safe-area-inset-top, 0px) + 20px) 16px 10px;}
+.app{max-width:430px;margin:0 auto;padding:0 0 env(safe-area-inset-bottom,24px);}
+.topbar{padding:calc(env(safe-area-inset-top,0px) + 20px) 16px 10px;}
 .app-name{font-family:'Zen Maru Gothic',sans-serif;font-size:22px;font-weight:500;color:var(--text);letter-spacing:0.02em;}
 .topbar-date{font-size:12px;color:var(--muted);margin-top:3px;}
-
 .tabs{display:flex;background:var(--bg3);border-radius:var(--radius);margin:10px 16px 18px;padding:3px;gap:3px;}
-.tab{flex:1;font-size:13px;padding:9px 0;cursor:pointer;border:none;background:none;color:var(--muted);border-radius:var(--radius-sm);font-family:inherit;-webkit-tap-highlight-color:transparent;}
+.tab{flex:1;font-size:12px;padding:9px 0;cursor:pointer;border:none;background:none;color:var(--muted);border-radius:var(--radius-sm);font-family:inherit;-webkit-tap-highlight-color:transparent;}
 .tab.active{background:var(--bg);color:var(--text);font-weight:500;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
-
 .section{display:none;padding:0 16px;}
 .section.active{display:block;}
-
 .form-label{font-size:11px;color:var(--muted);margin-bottom:5px;display:block;letter-spacing:0.04em;}
 .form-group{margin-bottom:12px;}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-
-input,select,textarea{
-  width:100%;background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius-sm);
-  color:var(--text);font-size:16px;font-family:inherit;padding:11px 12px;
-  -webkit-appearance:none;appearance:none;
-}
+input,select,textarea{width:100%;background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:16px;font-family:inherit;padding:11px 12px;-webkit-appearance:none;appearance:none;}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);}
 textarea{resize:vertical;font-size:15px;}
-
 .part-badge{display:inline-flex;align-items:center;font-size:12px;color:var(--accent-dk);background:var(--accent-lt);border-radius:99px;padding:3px 10px;margin-top:6px;}
-
 .ex-card{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
 .ex-card.dashed{border-style:dashed;background:var(--bg2);}
 .ex-card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
 .ex-card-meta{display:flex;flex-direction:column;gap:4px;}
 .ex-card-name{font-size:15px;font-weight:500;}
 .del-btn{background:none;border:none;color:var(--hint);font-size:22px;cursor:pointer;padding:0 0 0 8px;line-height:1;-webkit-tap-highlight-color:transparent;}
-
 .set-row{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg3);border-radius:var(--radius-xs);margin-bottom:6px;font-size:14px;}
 .set-num{color:var(--muted);font-size:11px;min-width:40px;}
 .set-del{margin-left:auto;background:none;border:none;color:var(--hint);cursor:pointer;font-size:18px;padding:4px;-webkit-tap-highlight-color:transparent;}
-
 .add-set-row{display:flex;gap:8px;align-items:flex-end;margin-top:10px;}
 .mini-label{font-size:11px;color:var(--muted);display:block;margin-bottom:4px;}
 .add-set-btn{background:none;border:1.5px solid var(--border);border-radius:var(--radius-xs);padding:11px 12px;font-size:14px;cursor:pointer;color:var(--muted);font-family:inherit;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
 .add-set-btn:active{background:var(--bg3);}
-
 .add-ex-btn{background:var(--accent-lt);border:none;border-radius:var(--radius-xs);padding:11px 16px;font-size:14px;cursor:pointer;color:var(--accent-dk);font-family:inherit;margin-top:12px;font-weight:500;width:100%;-webkit-tap-highlight-color:transparent;}
 .add-ex-btn:active{opacity:0.75;}
-
 .primary-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);padding:15px;font-size:16px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:10px;-webkit-tap-highlight-color:transparent;}
 .primary-btn:active{background:var(--accent-dk);}
 .ghost-btn{width:100%;background:none;border:1.5px solid var(--border);border-radius:var(--radius);padding:13px;font-size:14px;cursor:pointer;color:var(--muted);font-family:inherit;margin-top:8px;-webkit-tap-highlight-color:transparent;}
 .ghost-btn:active{background:var(--bg2);}
-
 .pill{display:inline-block;font-size:11px;padding:3px 9px;border-radius:99px;background:var(--accent-lt);color:var(--accent-dk);font-weight:500;margin-right:3px;}
-
 .history-wrap{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;}
 table.hist{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;}
 table.hist thead th{background:var(--bg2);color:var(--muted);font-weight:500;font-size:11px;padding:10px;text-align:left;border-bottom:1.5px solid var(--border);}
@@ -88,7 +71,6 @@ table.hist tbody td{padding:10px;vertical-align:top;}
 table.hist tbody td.m{color:var(--muted);}
 .expand-td{background:var(--bg2);padding:0 10px 10px;}
 .expand-inner{font-size:12px;color:var(--muted);line-height:2;padding-top:8px;}
-
 .stat-section{margin-bottom:22px;}
 .stat-section-label{font-size:11px;color:var(--muted);letter-spacing:0.05em;margin-bottom:10px;}
 .stat-grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:2px;}
@@ -97,7 +79,6 @@ table.hist tbody td.m{color:var(--muted);}
 .stat-card-val{font-size:26px;font-weight:500;color:var(--text);}
 .stat-card-val.accent{color:var(--accent-dk);}
 .stat-card-sub{font-size:11px;color:var(--hint);margin-top:2px;}
-
 .chart-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
 .chart-title{font-size:12px;color:var(--muted);margin-bottom:12px;}
 .bar-chart{display:flex;align-items:flex-end;gap:3px;height:72px;}
@@ -105,20 +86,30 @@ table.hist tbody td.m{color:var(--muted);}
 .bar-val{font-size:10px;color:var(--muted);}
 .bar-fill{width:100%;background:var(--accent);border-radius:3px 3px 0 0;opacity:0.65;min-height:2px;}
 .bar-lbl{font-size:9px;color:var(--hint);}
-
 .chip-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
 .chip{font-size:12px;padding:5px 12px;border-radius:99px;border:1.5px solid var(--border);cursor:pointer;background:none;color:var(--muted);font-family:inherit;-webkit-tap-highlight-color:transparent;}
 .chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
-
 .period-row{display:flex;gap:5px;margin-bottom:12px;}
 .period-btn{font-size:12px;padding:5px 14px;border-radius:99px;border:1.5px solid var(--border);cursor:pointer;background:none;color:var(--muted);font-family:inherit;-webkit-tap-highlight-color:transparent;}
 .period-btn.active{background:var(--bg3);color:var(--text);border-color:var(--muted);}
-
 .empty{text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:13px;}
 .divider{border:none;border-top:1px solid var(--border);margin:14px 0;}
-
 .toast{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;font-size:13px;padding:10px 20px;border-radius:99px;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;z-index:999;}
 .toast.show{opacity:1;}
+.data-section{margin-bottom:20px;}
+.data-section-label{font-size:11px;color:var(--muted);letter-spacing:0.05em;margin-bottom:10px;}
+.data-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px;}
+.data-card-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;}
+.data-card-desc{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6;}
+.data-btn{width:100%;background:none;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px;font-size:14px;cursor:pointer;color:var(--text);font-family:inherit;-webkit-tap-highlight-color:transparent;}
+.data-btn:active{background:var(--bg3);}
+.data-btn.accent{background:var(--accent);color:#fff;border-color:var(--accent);}
+.data-btn.accent:active{background:var(--accent-dk);}
+.file-input-wrap{position:relative;overflow:hidden;display:block;}
+.file-input-wrap input[type=file]{position:absolute;left:0;top:0;width:100%;height:100%;opacity:0;cursor:pointer;}
+.import-result{font-size:12px;margin-top:10px;padding:10px;border-radius:var(--radius-xs);display:none;line-height:1.5;}
+.import-result.ok{background:var(--accent-lt);color:var(--accent-dk);}
+.import-result.err{background:#fef0f0;color:#c0392b;}
 </style>
 </head>
 <body>
@@ -127,11 +118,11 @@ table.hist tbody td.m{color:var(--muted);}
     <div class="app-name">トレーニング記録</div>
     <div class="topbar-date" id="today-date"></div>
   </div>
-
   <div class="tabs">
     <button class="tab active" onclick="showTab('log')">記録</button>
     <button class="tab" onclick="showTab('history')">履歴</button>
     <button class="tab" onclick="showTab('stats')">統計</button>
+    <button class="tab" onclick="showTab('data')">データ</button>
   </div>
 
   <div id="tab-log" class="section active">
@@ -144,15 +135,10 @@ table.hist tbody td.m{color:var(--muted);}
       <div class="form-group">
         <label class="form-label">種目名</label>
         <select id="exercise-name" onchange="updatePartPreview()">
-          <option>レッグプレス</option>
-          <option>レッグカール</option>
-          <option>ベンチプレス</option>
-          <option>チェストプレス</option>
-          <option>ラットプルダウン</option>
-          <option>ショルダープレス</option>
-          <option>ダンベルカール</option>
-          <option>プランク</option>
-          <option>クランチ</option>
+          <option>レッグプレス</option><option>レッグカール</option>
+          <option>ベンチプレス</option><option>チェストプレス</option>
+          <option>ラットプルダウン</option><option>ショルダープレス</option>
+          <option>ダンベルカール</option><option>プランク</option><option>クランチ</option>
         </select>
         <div id="part-preview" class="part-badge"></div>
       </div>
@@ -194,23 +180,52 @@ table.hist tbody td.m{color:var(--muted);}
       </div>
     </div>
   </div>
-</div>
 
+  <div id="tab-data" class="section">
+    <div class="data-section">
+      <div class="data-section-label">インポート</div>
+      <div class="data-card">
+        <div class="data-card-title">スプレッドシートから読み込む</div>
+        <div class="data-card-desc">Google SheetsをCSV形式でダウンロードしてアップロードしてください。既存データと重複する日付はスキップされます。</div>
+        <div class="file-input-wrap">
+          <button class="data-btn accent">CSVファイルを選択</button>
+          <input type="file" accept=".csv" onchange="importCSV(this)">
+        </div>
+        <div class="import-result" id="import-result"></div>
+      </div>
+    </div>
+    <div class="data-section">
+      <div class="data-section-label">エクスポート</div>
+      <div class="data-card">
+        <div class="data-card-title">データをCSVで保存</div>
+        <div class="data-card-desc">記録したデータをCSVファイルとしてダウンロードできます。バックアップや別端末への移行に使えます。</div>
+        <button class="data-btn" onclick="exportCSV()">CSVをダウンロード</button>
+      </div>
+    </div>
+    <div class="data-section">
+      <div class="data-section-label">データ管理</div>
+      <div class="data-card">
+        <div class="data-card-title">記録件数</div>
+        <div class="data-card-desc" id="data-count-desc"></div>
+        <button class="data-btn" style="color:#c0392b;border-color:#e8c4c4;" onclick="clearAllData()">すべてのデータを削除</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
 const PART_MAP={
   'レッグプレス':'脚','レッグカール':'脚',
   'ベンチプレス':'胸','チェストプレス':'胸',
-  'ラットプルダウン':'背中',
+  'ラットプルダウン':'背中','ラットプル':'背中',
   'ショルダープレス':'肩',
-  'ダンベルカール':'腕',
-  'プランク':'腹筋','クランチ':'腹筋'
+  'ダンベルカール':'腕','アームカール':'腕',
+  'プランク':'腹筋','クランチ':'腹筋','腹筋':'腹筋'
 };
 
 let pendingSets=[],exercises=[],expandedRows={};
 let selectedEx=null,selectedPeriod='monthly';
-
 let logs=JSON.parse(localStorage.getItem('gym_v3')||'[]');
 
 const now=new Date();
@@ -222,20 +237,25 @@ updatePartPreview();
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2000);
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 function save(){try{localStorage.setItem('gym_v3',JSON.stringify(logs));}catch(e){}}
-function getPart(name){return PART_MAP[name]||'—';}
+function getPart(name){
+  if(!name)return '—';
+  if(PART_MAP[name])return PART_MAP[name];
+  for(const k of Object.keys(PART_MAP)){if(name.includes(k))return PART_MAP[k];}
+  return '—';
+}
 function updatePartPreview(){
-  const name=document.getElementById('exercise-name').value;
-  document.getElementById('part-preview').textContent='部位：'+getPart(name);
+  document.getElementById('part-preview').textContent='部位：'+getPart(document.getElementById('exercise-name').value);
 }
 function showTab(t){
-  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['log','history','stats'][i]===t));
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['log','history','stats','data'][i]===t));
   document.querySelectorAll('.section').forEach(el=>el.classList.remove('active'));
   document.getElementById('tab-'+t).classList.add('active');
   if(t==='history')renderHistory();
   if(t==='stats')renderStats();
+  if(t==='data')renderDataTab();
 }
 function addSet(){
   const w=parseFloat(document.getElementById('new-weight').value)||0;
@@ -260,10 +280,7 @@ function renderExercises(){
   document.getElementById('exercise-list').innerHTML=exercises.map((ex,i)=>`
     <div class="ex-card">
       <div class="ex-card-head">
-        <div class="ex-card-meta">
-          <span class="ex-card-name">${ex.name}</span>
-          <span class="part-badge">${ex.part}</span>
-        </div>
+        <div class="ex-card-meta"><span class="ex-card-name">${ex.name}</span><span class="part-badge">${ex.part}</span></div>
         <button class="del-btn" onclick="delEx(${i})">×</button>
       </div>
       ${ex.sets.map((s,si)=>`<div class="set-row"><span class="set-num">セット${si+1}</span>${s.w>0?s.w+'kg × ':'自重 × '}${s.r}回</div>`).join('')}
@@ -272,12 +289,7 @@ function renderExercises(){
 function delEx(i){exercises.splice(i,1);renderExercises();}
 function saveWorkout(){
   if(!exercises.length){showToast('種目を追加してください');return;}
-  logs.unshift({
-    date:document.getElementById('workout-date').value,
-    time:document.getElementById('workout-time').value,
-    exercises:[...exercises],
-    note:document.getElementById('workout-note').value
-  });
+  logs.unshift({date:document.getElementById('workout-date').value,time:document.getElementById('workout-time').value,exercises:[...exercises],note:document.getElementById('workout-note').value});
   save();exercises=[];pendingSets=[];
   renderExercises();renderPendingSets();
   document.getElementById('workout-note').value='';
@@ -288,15 +300,14 @@ function toggleRow(i){expandedRows[i]=!expandedRows[i];renderHistory();}
 function renderHistory(){
   const el=document.getElementById('history-list');
   if(!logs.length){el.innerHTML='<div class="empty">まだ記録がありません</div>';return;}
-  let rows=logs.map((l,i)=>{
+  const rows=logs.map((l,i)=>{
     const totalSets=l.exercises.reduce((a,e)=>a+e.sets.length,0);
     const isExp=!!expandedRows[i];
     const parts=[...new Set(l.exercises.map(e=>e.part))].filter(p=>p&&p!=='—');
-    const partPills=parts.map(p=>`<span class="pill">${p}</span>`).join('');
     const detail=isExp?`<tr><td colspan="4" class="expand-td"><div class="expand-inner">${l.exercises.map(e=>`<div><span style="color:var(--text);font-weight:500;">${e.name}</span>　${e.sets.map((s,si)=>`${si+1}本 ${s.w>0?s.w+'kg×':'自重×'}${s.r}回`).join('　')}</div>`).join('')}${l.note?`<div style="margin-top:6px;">${l.note}</div>`:''}</div></td></tr>`:'';
     return `<tr onclick="toggleRow(${i})">
       <td class="m" style="font-size:11px;">${l.date}<br>${l.time||''}</td>
-      <td>${partPills}</td>
+      <td>${parts.map(p=>`<span class="pill">${p}</span>`).join('')}</td>
       <td style="font-size:12px;">${l.exercises.map(e=>e.name).join('・')}<div style="font-size:11px;color:var(--hint);margin-top:2px;">${totalSets}セット</div></td>
       <td style="text-align:center;font-size:11px;color:var(--hint);">${isExp?'▲':'▼'}</td>
     </tr>${detail}`;
@@ -345,8 +356,7 @@ function setPeriod(p){
 }
 function renderWeightChart(){
   if(!selectedEx){document.getElementById('weight-chart').innerHTML='';return;}
-  const yr=now.getFullYear();
-  const points=[];
+  const yr=now.getFullYear();const points=[];
   if(selectedPeriod==='monthly'){
     const m={};for(let i=1;i<=12;i++)m[`${yr}-${String(i).padStart(2,'0')}`]=null;
     logs.filter(l=>l.date.startsWith(yr+'')).forEach(l=>{
@@ -354,7 +364,7 @@ function renderWeightChart(){
       l.exercises.filter(e=>e.name===selectedEx).forEach(e=>{const mw=Math.max(...e.sets.map(s=>s.w));if(mw>0)m[k]=m[k]===null?mw:Math.max(m[k],mw);});
     });
     Object.entries(m).forEach(([k,v])=>points.push({label:k.slice(5)+'月',val:v}));
-  } else {
+  }else{
     const y={};
     logs.forEach(l=>{const yr2=l.date.slice(0,4);l.exercises.filter(e=>e.name===selectedEx).forEach(e=>{const mw=Math.max(...e.sets.map(s=>s.w));if(mw>0)y[yr2]=y[yr2]===undefined?mw:Math.max(y[yr2],mw);});});
     Object.entries(y).sort().forEach(([k,v])=>points.push({label:k+'年',val:v}));
@@ -376,17 +386,140 @@ function renderWeightChart(){
     lbls+=`<text x="${x}" y="${y-9}" text-anchor="middle" font-size="10" fill="#8a9a8a">${p.val}kg</text>`;
   });
   const xLbls=points.map((p,i)=>`<text x="${cx(i)}" y="${H-3}" text-anchor="middle" font-size="9" fill="#c4d0c4">${p.label}</text>`).join('');
-  const grid=`<line x1="${pL}" y1="${pT}" x2="${W-pR}" y2="${pT}" stroke="#e4ebe4" stroke-width="1"/>
-    <line x1="${pL}" y1="${H-pB}" x2="${W-pR}" y2="${H-pB}" stroke="#e4ebe4" stroke-width="1"/>`;
-  const yLbls=`<text x="${pL-4}" y="${cy(minV)+4}" text-anchor="end" font-size="9" fill="#c4d0c4">${minV}</text>
-    <text x="${pL-4}" y="${cy(maxV)+4}" text-anchor="end" font-size="9" fill="#c4d0c4">${maxV}</text>`;
+  const grid=`<line x1="${pL}" y1="${pT}" x2="${W-pR}" y2="${pT}" stroke="#e4ebe4" stroke-width="1"/><line x1="${pL}" y1="${H-pB}" x2="${W-pR}" y2="${H-pB}" stroke="#e4ebe4" stroke-width="1"/>`;
+  const yLbls=`<text x="${pL-4}" y="${cy(minV)+4}" text-anchor="end" font-size="9" fill="#c4d0c4">${minV}</text><text x="${pL-4}" y="${cy(maxV)+4}" text-anchor="end" font-size="9" fill="#c4d0c4">${maxV}</text>`;
   document.getElementById('weight-chart').innerHTML=`
     <div class="chart-title">${selectedEx} の最大重量推移</div>
     <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;overflow:visible;">
-      ${grid}${yLbls}
-      <path d="${path}" fill="none" stroke="#6aaa7a" stroke-width="2" stroke-linejoin="round"/>
-      ${dots}${lbls}${xLbls}
+      ${grid}${yLbls}<path d="${path}" fill="none" stroke="#6aaa7a" stroke-width="2" stroke-linejoin="round"/>${dots}${lbls}${xLbls}
     </svg>`;
+}
+
+function renderDataTab(){
+  document.getElementById('data-count-desc').textContent=`現在 ${logs.length} 件のトレーニングが記録されています。`;
+}
+
+function exportCSV(){
+  if(!logs.length){showToast('記録がありません');return;}
+  const rows=[['日付','時間','種目','部位','セット番号','重量(kg)','回数','メモ']];
+  logs.forEach(l=>{
+    l.exercises.forEach(e=>{
+      e.sets.forEach((s,si)=>{
+        rows.push([l.date,l.time||'',e.name,e.part,si+1,s.w,s.r,si===0?(l.note||''):'']);
+      });
+    });
+  });
+  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;
+  a.download=`training_${now.toISOString().slice(0,10)}.csv`;
+  a.click();URL.revokeObjectURL(url);
+  showToast('CSVをダウンロードしました');
+}
+
+function importCSV(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const text=e.target.result;
+      const imported=parseSpreadsheetCSV(text);
+      if(!imported.length){showImportResult('err','読み込めるデータが見つかりませんでした。フォーマットを確認してください。');return;}
+      const existingDates=new Set(logs.map(l=>l.date));
+      const newLogs=imported.filter(l=>!existingDates.has(l.date));
+      if(!newLogs.length){showImportResult('ok','すべての日付はすでにインポート済みです（重複スキップ）');return;}
+      logs=[...logs,...newLogs].sort((a,b)=>b.date.localeCompare(a.date));
+      save();renderDataTab();
+      showImportResult('ok',`✓ ${newLogs.length}件のトレーニングをインポートしました`);
+    }catch(err){
+      showImportResult('err','読み込みに失敗しました：'+err.message);
+    }
+    input.value='';
+  };
+  reader.readAsText(file,'UTF-8');
+}
+
+function showImportResult(type,msg){
+  const el=document.getElementById('import-result');
+  el.className='import-result '+type;el.textContent=msg;el.style.display='block';
+}
+
+function parseCSVRow(row){
+  const result=[];let cur='',inQ=false;
+  for(let i=0;i<row.length;i++){
+    const c=row[i];
+    if(c==='"')inQ=!inQ;
+    else if(c===','&&!inQ){result.push(cur);cur='';}
+    else cur+=c;
+  }
+  result.push(cur);
+  return result;
+}
+
+function normalizeDate(val){
+  const m=val.match(/(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+  if(m)return `${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;
+  const n=Number(val);
+  if(!isNaN(n)&&n>40000&&n<60000){
+    const d=new Date((n-25569)*86400*1000);
+    return d.toISOString().slice(0,10);
+  }
+  return null;
+}
+
+function findDateCols(row){
+  const res=[];
+  for(let c=0;c<row.length;c++){
+    const cell=(row[c]||'').trim();
+    const date=normalizeDate(cell);
+    if(date)res.push({date,weightCol:c+1,repsCol:c+2});
+  }
+  return res;
+}
+
+function parseSpreadsheetCSV(text){
+  const clean=text.replace(/^\uFEFF/,'').replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  const rows=clean.split('\n').map(r=>parseCSVRow(r));
+  const results=[];
+  let i=0;
+  while(i<rows.length){
+    const dateCols=findDateCols(rows[i]);
+    if(!dateCols.length){i++;continue;}
+    // 日付行の次行=ヘッダー（重量/回数）、+2行目から種目データ
+    const dayData={};
+    dateCols.forEach(d=>{ dayData[d.date]={date:d.date,time:'',exercises:[],note:''}; });
+    let j=i+2;
+    while(j<rows.length){
+      const row=rows[j];
+      if(!row||row.every(c=>!c.trim()))break;
+      if(findDateCols(row).length>0)break;
+      const exName=(row[0]||'').trim();
+      if(!exName){j++;continue;}
+      dateCols.forEach(d=>{
+        if(!dayData[d.date])return;
+        const wStr=(row[d.weightCol]||'').trim();
+        const rStr=(row[d.repsCol]||'').trim();
+        if(!wStr&&!rStr)return;
+        const ws=wStr?wStr.split(',').map(v=>parseFloat(v.trim())||0):[];
+        const rs=rStr?rStr.split(',').map(v=>parseInt(v.trim())||0):[];
+        const cnt=Math.max(ws.length,rs.length);
+        if(!cnt)return;
+        const sets=[];
+        for(let s=0;s<cnt;s++)sets.push({w:ws[s]||0,r:rs[s]||0});
+        dayData[d.date].exercises.push({name:exName,part:getPart(exName),sets});
+      });
+      j++;
+    }
+    Object.values(dayData).forEach(d=>{if(d.exercises.length)results.push(d);});
+    i=j;
+  }
+  return results;
+}
+
+function clearAllData(){
+  if(!confirm(`${logs.length}件のデータをすべて削除します。この操作は取り消せません。`))return;
+  logs=[];save();renderDataTab();showToast('データを削除しました');
 }
 
 if('serviceWorker' in navigator){
