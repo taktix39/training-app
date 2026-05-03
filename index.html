@@ -146,6 +146,7 @@ table.hist tbody td.m{color:var(--muted);}
           <option>クランチ</option>
         </select>
         <div id="part-preview" class="part-badge"></div>
+        <div id="prev-info" style="display:none;margin-top:4px;font-size:12px;color:var(--muted);background:var(--bg3);border-radius:99px;padding:3px 10px;display:inline-flex;"></div>
       </div>
       <div id="new-set-list"></div>
       <div class="add-set-row" id="add-set-row">
@@ -179,8 +180,10 @@ table.hist tbody td.m{color:var(--muted);}
       <div class="chart-card">
         <div class="chip-row" id="ex-chips"></div>
         <div class="period-row">
-          <button class="period-btn active" onclick="setPeriod('monthly')">月間</button>
-          <button class="period-btn" onclick="setPeriod('yearly')">年間</button>
+          <button class="period-btn active" onclick="setPeriod('daily')">日別</button>
+          <button class="period-btn" onclick="setPeriod('weekly')">週別</button>
+          <button class="period-btn" onclick="setPeriod('monthly')">月別</button>
+          <button class="period-btn" onclick="setPeriod('yearly')">年別</button>
         </div>
         <div id="weight-chart"></div>
       </div>
@@ -272,24 +275,73 @@ function updateInputUI(){
   const rw=document.getElementById('reps-wrap');
   const sw=document.getElementById('secs-wrap');
 
+  // 前回セットデータを取得
+  function getLastSets(name){
+    for(const l of logs){
+      const ex=l.exercises.find(e=>e.name===name);
+      if(ex&&ex.sets.length) return ex.sets;
+    }
+    return null;
+  }
+  const lastSets=getLastSets(name);
+
   if(type==='plank'){
     ww.style.display='none'; rw.style.display='none'; sw.style.display='block';
     buildOptions(document.getElementById('new-secs'),SECS_OPTIONS,v=>v+'秒');
+    const lastSecs=getLastVal(name,'secs');
+    if(lastSecs) document.getElementById('new-secs').value=lastSecs;
   } else if(type==='cranch'){
     ww.style.display='none'; rw.style.display='block'; sw.style.display='none';
     buildOptions(document.getElementById('new-reps'),REPS_OPTIONS,v=>v+'回');
+    const lastR=getLastVal(name,'r');
+    if(lastR) document.getElementById('new-reps').value=lastR;
   } else {
     ww.style.display='block'; rw.style.display='block'; sw.style.display='none';
     buildOptions(document.getElementById('new-weight'),WEIGHT_OPTIONS[name]||makeRange(10,100,5),v=>v+'kg');
     buildOptions(document.getElementById('new-reps'),REPS_OPTIONS,v=>v+'回');
+    const lastW=getLastVal(name,'w');
+    const lastR=getLastVal(name,'r');
+    if(lastW) document.getElementById('new-weight').value=lastW;
+    if(lastR) document.getElementById('new-reps').value=lastR;
+  }
+
+  // 前回セットを自動追加
+  pendingSets=[];
+  if(lastSets&&lastSets.length){
+    pendingSets=[...lastSets.map(s=>({...s}))];
+  }
+
+  // 前回表示バッジ更新
+  const prevEl=document.getElementById('prev-info');
+  if(prevEl){
+    let prevText='';
+    if(lastSets&&lastSets.length){
+      const sc=lastSets.length;
+      if(type==='plank'){const v=lastSets[0].secs;prevText=`前回：${sc}セット ${v?v+'秒':''}`;}
+      else if(type==='cranch'){const v=lastSets[0].r;prevText=`前回：${sc}セット ${v?v+'回':''}`;}
+      else{const w=lastSets[0].w;const r=lastSets[0].r;prevText=`前回：${sc}セット ${w?w+'kg':''}${w&&r?' × ':''}${r?r+'回':''}`;}
+    }
+    prevEl.textContent=prevText;
+    prevEl.style.display=prevText?'inline-flex':'none';
   }
   document.getElementById('part-preview').textContent='部位：'+getPart(name);
-  pendingSets=[];renderPendingSets();
+  renderPendingSets();
 }
 
 let pendingSets=[],exercises=[],expandedRows={};
-let selectedEx=null,selectedPeriod='monthly';
+let selectedEx=null,selectedPeriod='daily';
 let logs=JSON.parse(localStorage.getItem('gym_v3')||'[]');
+
+function getLastVal(name,key){
+  for(const l of logs){
+    const ex=l.exercises.find(e=>e.name===name);
+    if(ex&&ex.sets.length){
+      const vals=ex.sets.map(s=>s[key]).filter(v=>v>0);
+      if(vals.length)return vals[vals.length-1];
+    }
+  }
+  return null;
+}
 
 const now=new Date();
 document.getElementById('workout-date').value=now.toISOString().split('T')[0];
@@ -473,25 +525,55 @@ function renderExChips(){
 function selEx(n){selectedEx=n;renderExChips();renderWeightChart();}
 function setPeriod(p){
   selectedPeriod=p;
-  document.querySelectorAll('.period-btn').forEach(b=>b.classList.toggle('active',b.textContent===(p==='monthly'?'月間':'年間')));
+  const labels={'daily':'日別','weekly':'週別','monthly':'月別','yearly':'年別'};
+  document.querySelectorAll('.period-btn').forEach(b=>b.classList.toggle('active',b.textContent===labels[p]));
   renderWeightChart();
 }
 function renderWeightChart(){
   if(!selectedEx){document.getElementById('weight-chart').innerHTML='';return;}
-  const yr=now.getFullYear();const points=[];
-  if(selectedPeriod==='monthly'){
+  const yr=now.getFullYear();
+  const points=[];
+
+  if(selectedPeriod==='daily'){
+    // 直近20件の記録日ごと
+    const relevant=logs.filter(l=>l.exercises.some(e=>e.name===selectedEx&&e.sets.some(s=>s.w>0)))
+      .slice(0,20).reverse();
+    relevant.forEach(l=>{
+      l.exercises.filter(e=>e.name===selectedEx).forEach(e=>{
+        const mw=Math.max(...e.sets.map(s=>s.w));
+        if(mw>0)points.push({label:l.date.slice(5),val:mw});
+      });
+    });
+  } else if(selectedPeriod==='weekly'){
+    // 直近12週
+    const weekData={};
+    logs.filter(l=>l.exercises.some(e=>e.name===selectedEx)).forEach(l=>{
+      const d=new Date(l.date);
+      const dayOfWeek=d.getDay();
+      const monday=new Date(d);monday.setDate(d.getDate()-(dayOfWeek===0?6:dayOfWeek-1));
+      const wk=monday.toISOString().slice(0,10);
+      l.exercises.filter(e=>e.name===selectedEx).forEach(e=>{
+        const mw=Math.max(...e.sets.map(s=>s.w));
+        if(mw>0)weekData[wk]=weekData[wk]===undefined?mw:Math.max(weekData[wk],mw);
+      });
+    });
+    Object.entries(weekData).sort().slice(-12).forEach(([k,v])=>{
+      points.push({label:k.slice(5),val:v});
+    });
+  } else if(selectedPeriod==='monthly'){
     const m={};for(let i=1;i<=12;i++)m[`${yr}-${String(i).padStart(2,'0')}`]=null;
     logs.filter(l=>l.date.startsWith(yr+'')).forEach(l=>{
       const k=l.date.slice(0,7);
       l.exercises.filter(e=>e.name===selectedEx).forEach(e=>{const mw=Math.max(...e.sets.map(s=>s.w));if(mw>0)m[k]=m[k]===null?mw:Math.max(m[k],mw);});
     });
     Object.entries(m).forEach(([k,v])=>points.push({label:k.slice(5)+'月',val:v}));
-  }else{
+  } else {
     const y={};
     logs.forEach(l=>{const yr2=l.date.slice(0,4);l.exercises.filter(e=>e.name===selectedEx).forEach(e=>{const mw=Math.max(...e.sets.map(s=>s.w));if(mw>0)y[yr2]=y[yr2]===undefined?mw:Math.max(y[yr2],mw);});});
     Object.entries(y).sort().forEach(([k,v])=>points.push({label:k+'年',val:v}));
   }
-  const filled=points.filter(p=>p.val!==null);
+
+  const filled=points.filter(p=>p.val!==null&&p.val!==undefined);
   if(!filled.length){document.getElementById('weight-chart').innerHTML=`<div style="font-size:12px;color:var(--muted);padding:8px 0;">${selectedEx} の重量データがまだありません</div>`;return;}
   const W=320,H=110,pL=30,pR=8,pT=18,pB=26;
   const vals=filled.map(p=>p.val);
@@ -501,7 +583,7 @@ function renderWeightChart(){
   const cy=v=>pT+(H-pT-pB)*(1-(v-minV)/range);
   let path='',dots='',lbls='',px=null;
   points.forEach((p,i)=>{
-    const x=cx(i);if(p.val===null){px=null;return;}
+    const x=cx(i);if(p.val===null||p.val===undefined){px=null;return;}
     const y=cy(p.val);
     path+=px===null?`M${x},${y}`:`L${x},${y}`;px=x;
     dots+=`<circle cx="${x}" cy="${y}" r="3.5" fill="#fff" stroke="#6aaa7a" stroke-width="2"/>`;
@@ -510,8 +592,9 @@ function renderWeightChart(){
   const xLbls=points.map((p,i)=>`<text x="${cx(i)}" y="${H-3}" text-anchor="middle" font-size="9" fill="#c4d0c4">${p.label}</text>`).join('');
   const grid=`<line x1="${pL}" y1="${pT}" x2="${W-pR}" y2="${pT}" stroke="#e4ebe4" stroke-width="1"/><line x1="${pL}" y1="${H-pB}" x2="${W-pR}" y2="${H-pB}" stroke="#e4ebe4" stroke-width="1"/>`;
   const yLbls=`<text x="${pL-4}" y="${cy(minV)+4}" text-anchor="end" font-size="9" fill="#c4d0c4">${minV}</text><text x="${pL-4}" y="${cy(maxV)+4}" text-anchor="end" font-size="9" fill="#c4d0c4">${maxV}</text>`;
+  const periodLabels={'daily':'直近の記録','weekly':'週別','monthly':'月別（今年）','yearly':'年別'};
   document.getElementById('weight-chart').innerHTML=`
-    <div class="chart-title">${selectedEx} の最大重量推移</div>
+    <div class="chart-title">${selectedEx} の最大重量推移（${periodLabels[selectedPeriod]}）</div>
     <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;overflow:visible;">
       ${grid}${yLbls}<path d="${path}" fill="none" stroke="#6aaa7a" stroke-width="2" stroke-linejoin="round"/>${dots}${lbls}${xLbls}
     </svg>`;
