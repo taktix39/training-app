@@ -445,14 +445,46 @@ function setDisplay(s,type){
 function renderExercises(){
   document.getElementById('exercise-list').innerHTML=exercises.map((ex,i)=>{
     const type=getExType(ex.name);
+    const setsHtml=ex.sets.map((s,si)=>{
+      let editHtml='';
+      if(type==='plank'){
+        editHtml=`<select onchange="editExSet(${i},${si},'secs',this.value)" style="flex:1;padding:5px 8px;font-size:13px;background:var(--bg2);">
+          ${SECS_OPTIONS.map(v=>`<option value="${v}"${v===s.secs?' selected':''}>${v}秒</option>`).join('')}
+        </select>`;
+      } else if(type==='cranch'){
+        editHtml=`<select onchange="editExSet(${i},${si},'r',this.value)" style="flex:1;padding:5px 8px;font-size:13px;background:var(--bg2);">
+          ${REPS_OPTIONS.map(v=>`<option value="${v}"${v===s.r?' selected':''}>${v}回</option>`).join('')}
+        </select>`;
+      } else {
+        const wopts=(WEIGHT_OPTIONS[ex.name]||makeRange(10,100,5)).map(v=>`<option value="${v}"${v===s.w?' selected':''}>${v}kg</option>`).join('');
+        const ropts=REPS_OPTIONS.map(v=>`<option value="${v}"${v===s.r?' selected':''}>${v}回</option>`).join('');
+        editHtml=`
+          <select onchange="editExSet(${i},${si},'w',this.value)" style="flex:1;padding:5px 8px;font-size:13px;background:var(--bg2);">${wopts}</select>
+          <select onchange="editExSet(${i},${si},'r',this.value)" style="flex:1;padding:5px 8px;font-size:13px;background:var(--bg2);">${ropts}</select>`;
+      }
+      return `<div class="set-row">
+        <span class="set-num">セット${si+1}</span>
+        ${editHtml}
+        <button class="set-del" onclick="delExSet(${i},${si})">×</button>
+      </div>`;
+    }).join('');
     return `<div class="ex-card">
       <div class="ex-card-head">
         <div class="ex-card-meta"><span class="ex-card-name">${ex.name}</span><span class="part-badge">${ex.part}</span></div>
         <button class="del-btn" onclick="delEx(${i})">×</button>
       </div>
-      ${ex.sets.map((s,si)=>`<div class="set-row"><span class="set-num">セット${si+1}</span><span style="font-size:13px;">${setDisplay(s,type)}</span></div>`).join('')}
+      ${setsHtml}
     </div>`;
   }).join('');
+}
+function editExSet(exIdx,setIdx,key,val){
+  if(key==='w'||key==='secs') exercises[exIdx].sets[setIdx][key]=parseFloat(val);
+  else exercises[exIdx].sets[setIdx][key]=parseInt(val);
+}
+function delExSet(exIdx,setIdx){
+  exercises[exIdx].sets.splice(setIdx,1);
+  if(!exercises[exIdx].sets.length) exercises.splice(exIdx,1);
+  renderExercises();
 }
 function delEx(i){exercises.splice(i,1);renderExercises();}
 
