@@ -499,6 +499,15 @@ function saveWorkout(){
 }
 
 function toggleRow(i){expandedRows[i]=!expandedRows[i];renderHistory();}
+function deleteLog(i){
+  if(!confirm(`${logs[i].date} のトレーニングをすべて削除しますか？`))return;
+  logs.splice(i,1);save();expandedRows={};renderHistory();showToast('削除しました');
+}
+function deleteExFromLog(logIdx,exIdx){
+  logs[logIdx].exercises.splice(exIdx,1);
+  if(!logs[logIdx].exercises.length) logs.splice(logIdx,1);
+  save();expandedRows={};renderHistory();showToast('削除しました');
+}
 function renderHistory(){
   const el=document.getElementById('history-list');
   if(!logs.length){el.innerHTML='<div class="empty">まだ記録がありません</div>';return;}
@@ -506,10 +515,21 @@ function renderHistory(){
     const totalSets=l.exercises.reduce((a,e)=>a+e.sets.length,0);
     const isExp=!!expandedRows[i];
     const parts=[...new Set(l.exercises.map(e=>e.part))].filter(p=>p&&p!=='—');
-    const detail=isExp?`<tr><td colspan="4" class="expand-td"><div class="expand-inner">${l.exercises.map(e=>{
-      const type=getExType(e.name);
-      return `<div><span style="color:var(--text);font-weight:500;">${e.name}</span>　${e.sets.map((s,si)=>`${si+1}本 ${setDisplay(s,type)}`).join('　')}</div>`;
-    }).join('')}${l.note?`<div style="margin-top:6px;">${l.note}</div>`:''}</div></td></tr>`:'';
+    const detail=isExp?`<tr><td colspan="4" class="expand-td"><div class="expand-inner">
+      ${l.exercises.map((e,ei)=>{
+        const type=getExType(e.name);
+        return `<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
+          <div>
+            <span style="color:var(--text);font-weight:500;">${e.name}</span>　${e.sets.map((s,si)=>`${si+1}本 ${setDisplay(s,type)}`).join('　')}
+          </div>
+          <button onclick="event.stopPropagation();deleteExFromLog(${i},${ei})" style="background:none;border:none;color:var(--hint);font-size:18px;cursor:pointer;padding:0 2px;flex-shrink:0;" title="この種目を削除">×</button>
+        </div>`;
+      }).join('')}
+      ${l.note?`<div style="margin-top:6px;color:var(--muted);">${l.note}</div>`:''}
+      <div style="margin-top:10px;">
+        <button onclick="event.stopPropagation();deleteLog(${i})" style="background:none;border:1px solid #e8c4c4;border-radius:var(--radius-xs);padding:6px 12px;font-size:12px;color:#c0392b;cursor:pointer;font-family:inherit;width:100%;">この日のトレーニングをすべて削除</button>
+      </div>
+    </div></td></tr>`:'';
     return `<tr onclick="toggleRow(${i})">
       <td class="m" style="font-size:11px;">${l.date}<br>${l.time||''}</td>
       <td>${parts.map(p=>`<span class="pill">${p}</span>`).join('')}</td>
